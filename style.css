@@ -1,0 +1,41 @@
+/*
+Theme Name: Dewi
+Theme URL: 
+Authour: Md. Rubel Ali
+*/
+.myimg{
+    width: 40%;
+    height: 350px;
+    margin: 0 30%;
+    
+}
+.post_thumbnail_img{
+    width: 150px;
+    height: 80px; 
+    border-radius: 20px;
+}
+.posts_style{
+float: left;
+   
+}
+.post-content{
+    float: left;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+.post-content a:hover{
+    color: red;
+}
+.post_image{
+    width: 500px;
+    height: 300px;
+    border-radius:10px;
+    margin-bottom: 10px;
+}
+.recent-post-w a{
+    color:rgba(146, 204, 34, 0.87);
+    padding: 5px;
+}
+.recent-post-w a:hover{
+    color:#eee;
+}
