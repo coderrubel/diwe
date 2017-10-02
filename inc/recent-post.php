@@ -24,11 +24,10 @@ class recent_posts extends WP_Widget {
         <div class="popular-posts-wrapper">
 
             <?php
-            $featured_args = array(
-                'posts_per_page' => $limit,
-            );
+           
             $featured_query = new WP_Query(array(
                 'post_type' => 'blogpost',
+                'posts_per_page' => $limit,
             ));
             // This code for main post
             // $featured_query = new WP_Query($featured_args);
@@ -44,8 +43,8 @@ class recent_posts extends WP_Widget {
                         <!-- post -->
                         <div class="post">
                             <!-- content -->
-                            <p class="recent-post-w"><a href="<?php echo get_permalink(); ?>"><?php echo trim(substr(get_the_title(), 0, 30)); ?> </a></p>
-                            <span class="recent-post-w"> 
+                            <p class="recent-post-w"><a href="<?php echo get_permalink(); ?>"><?php echo trim(substr(get_the_title(), 0, 40)); ?> </a><br>
+                           
                                 <?php
                                 $bp_catagory = get_the_terms(get_the_ID(), 'catagory');
                                 if (!empty($bp_catagory)) {
@@ -55,11 +54,12 @@ class recent_posts extends WP_Widget {
                                         echo '<a href="' . $link . '">' . $blog_catagory . '</a> ';
                                     }
                                 }
+                               
                                 ?>
-                            </span>
-                            <span class="recent-post-w"> 
+                            
+                           
                                 <a href="<?php echo get_permalink(); ?>"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo get_the_date('d M , Y'); ?></a>
-                            </span>
+                           </p>
                             <!-- end content -->
                         </div><!-- end post -->
 

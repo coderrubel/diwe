@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 f-about">
-                    <a href="index.html"><h1><span>D</span>ewi</h1></a>
+                    <a href="<?php home_url(); ?>"><h1><span>D</span>ewi</h1></a>
                     <p>We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind, the hidden and mysterious subconscious. Our subconscious mind contains such power.</p>
 
                 </div>
@@ -35,24 +35,17 @@
                     <?php echo get_option('copy_right'); ?>
                     <div class="credits">
 
-                        <a href="https://bootstrapmade.com/free-business-bootstrap-themes-website-templates/">Business Bootstrap Themes</a>
+                        <a href="<?php echo esc_url( get_option('admin_url')); ?>">Business Bootstrap Themes</a>
                         by  <a href="<?php echo esc_url( get_option('admin_url')); ?>"><?php echo get_option('admin_name'); ?></a> 
                     </div>
                 </div>
                 <nav class="foot-nav">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
+                   <?php wp_nav_menu('main_menu'); ?>
                 </nav>
                 <div class="clear"></div>
             </div>
         </div>
         <a href="" class="scrollup"><i class="fa fa-chevron-up"></i></a>
-
     </div>	
 </footer>
 

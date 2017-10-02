@@ -94,6 +94,15 @@ function customize_services($headingsection) {
         'setting' => 'google',
         'type' => 'url',
     ));
+    $headingsection->add_setting('colora', array(
+        'default'=>'#E9E9E9',
+        'transport' => 'refresh',
+    ));
+    $headingsection->add_control(new WP_Customize_Color_Control($headingsection,'text_color',array( 
+        'label' => 'Font Color',
+        'section' => 'heading',
+        'setting' => 'colora',  
+    )));
 }
 
 add_action('customize_register', 'customize_services');
@@ -156,8 +165,8 @@ function services() {
         'menu_icon' => 'dashicons-groups',
         'supports' => array('title', 'editor', 'thumbnail', 'comments'),
     ));
-    
-        register_taxonomy('catagory', 'blogpost', array(
+
+    register_taxonomy('catagory', 'blogpost', array(
         'labels' => array(
             'name' => 'Catagory',
             'add_new_item' => 'Add New Catagori',
@@ -165,7 +174,7 @@ function services() {
         'public' => true,
         'hierarchical' => true,
     ));
-        register_taxonomy('tag', 'blogpost', array(
+    register_taxonomy('tag', 'blogpost', array(
         'labels' => array(
             'name' => 'Tag',
             'add_new_item' => 'Add New Catagori',
@@ -244,42 +253,38 @@ function sidebar() {
         'id' => 'rightsidebar',
         'before_widget' => '<div class="col-xs-6 col-md-4">',
         'after_widget' => '</div>',
-        'before_title'=>'<div class="page-header"><h3>',
-        'after_title'=>'</h3></div>',
-        
+        'before_title' => '<div class="page-header"><h3>',
+        'after_title' => '</h3></div>',
     ));
-    
+
     register_sidebar(array(
-        'name'=>'Footer Widget',
-        'id'=>'footerwidget',
-        'before_widget'=>'<div class="col-md-4">',
-        'after_widget'=>'</div>',
-        'before_title'=>'<h3 class="widgetheading">',
-        'after_title'=>'</h3>',
+        'name' => 'Footer Widget',
+        'id' => 'footerwidget',
+        'before_widget' => '<div class="col-md-4 recent-post-w">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widgetheading">',
+        'after_title' => '</h3>',
     ));
 
     //custom widget
     register_widget('custom_recent_posts');
-    register_widget('sparkling_popular_posts');
+    register_widget('diwe_popular_posts');
     register_widget('recent_posts');
-    
 }
 
 add_action('widgets_init', 'sidebar');
 
 
-//require_once 'theme_options.php';
-require_once 'setting_api.php';
-require_once 'recent_post_widget.php';
-require_once 'popular_post_widget.php';
-require_once 'recent-post.php';
-
+require_once '/inc/setting_api.php';
+require_once '/inc/recent_post_widget.php';
+require_once '/inc/popular_post_widget.php';
+require_once '/inc/recent-post.php';
 
 //post counter 
-function getPostViews($postID){
+function getPostViews($postID) {
     $count_key = 'post_views_count';
     $count = get_post_meta($postID, $count_key, true);
-    if($count==''){
+    if ($count == '') {
         delete_post_meta($postID, $count_key);
         add_post_meta($postID, $count_key, '0');
         return "0";
@@ -287,27 +292,23 @@ function getPostViews($postID){
     return $count;
 }
 
-//new po p
+// popular post
 function setPostViews($postID) {
     $countKey = 'post_views_count';
     $count = get_post_meta($postID, $countKey, true);
-    if($count==''){
+    if ($count == '') {
         $count = 0;
         delete_post_meta($postID, $countKey);
         add_post_meta($postID, $countKey, '0');
-    }else{
+    } else {
         $count++;
         update_post_meta($postID, $countKey, $count);
     }
 }
 
-// popular post
+remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 
-remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-
-
-
-  function add_css_and_js(){
+function add_css_and_js() {
     wp_register_style('style', get_template_directory_uri() . '/css/style.css');
     wp_register_style('animate', get_template_directory_uri() . '/css/animate.css');
     wp_register_style('fancybox', get_template_directory_uri() . '/js/fancybox/jquery.fancybox.css');
@@ -316,19 +317,24 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
     wp_register_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.min.css');
     wp_register_style('bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css');
     wp_register_style('mystyle', get_template_directory_uri() . '/style.css');
-    
-    wp_register_script('jquery',get_template_directory_uri().'/js/jquery-2.1.1.min.js');
-    wp_register_script('functions',get_template_directory_uri().'/js/functions.js');
-    wp_register_script('bxslider',get_template_directory_uri().'/js/jquery.bxslider.min.js');
-    wp_register_script('easing',get_template_directory_uri().'/js/jquery.easing.1.3.js');
-    wp_register_script('fancybox',get_template_directory_uri().'/js/fancybox/jquery.fancybox.pack.js');
-    wp_register_script('wow',get_template_directory_uri().'/js/wow.min.js');
-    wp_register_script('bootstrap',get_template_directory_uri().'/js/bootstrap.min.js');
-    
-    
-    
-    wp_enqueue_style(array('bootstrap','font-awesome','bxslider','isotope','fancybox','animate','style','mystyle'));
-    wp_enqueue_script(array('jquery','bootstrap','wow','fancybox','easing','bxslider','functions'));
+
+    wp_register_script('jquery', get_template_directory_uri() . '/js/jquery-2.1.1.min.js');
+
+
+
+/*
+    wp_register_script('jquery', get_template_directory_uri() . '/js/jquery-2.1.1.min.js');
+    wp_register_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js');
+    wp_register_script('wow', get_template_directory_uri() . '/js/wow.min.js');
+    wp_register_script('fancybox', get_template_directory_uri() . '/js/fancybox/jquery.fancybox.pack.js');
+    wp_register_script('isotope', get_template_directory_uri() . '/js/jquery.isotope.min.js');
+    wp_register_script('easing', get_template_directory_uri() . '/js/jquery.easing.1.3.js');
+    wp_register_script('bxslider', get_template_directory_uri() . '/js/jquery.bxslider.min.js');
+    wp_register_script('functions', get_template_directory_uri() . '/js/functions.js');
+
+*/
+    wp_enqueue_style(array('bootstrap', 'font-awesome', 'bxslider', 'isotope', 'fancybox', 'animate', 'style', 'mystyle'));
+   // wp_enqueue_script(array('jquery', 'bootstrap', 'wow', 'fancybox','isotope', 'easing', 'bxslider', 'functions'));
 }
-add_action('wp_enqueue_scripts','add_css_and_js');
- 
+
+add_action('wp_enqueue_scripts', 'add_css_and_js');

@@ -1,48 +1,42 @@
 <?php
-
-class custom_recent_posts extends WP_Widget {
-
+class diwe_popular_posts extends WP_Widget {
     function __construct() {
-        $widget_ops = array('classname' => 'custom_recent_posts', 'description' => esc_html("Custom Recent Posts"));
-        parent::__construct('custom_recent_posts', esc_html("Custom Recent Posts"), $widget_ops);
+        $widget_ops = array('classname' => 'sparkling-popular-posts', 'description' => esc_html__("Popular Posts", 'diwe'));
+        parent::__construct('diwe_popular_posts', esc_html__('Popular Posts', 'diwe'), $widget_ops);
     }
-
     function widget($args, $instance) {
         extract($args);
-        $title = isset($instance['title']) ? $instance['title'] : esc_html('Recent Posts');
+        $title = isset($instance['title']) ? $instance['title'] : esc_html__('Popular Posts', 'diwe');
         $limit = isset($instance['limit']) ? $instance['limit'] : 5;
         echo $before_widget;
         echo $before_title;
         echo $title;
         echo $after_title;
-        /**
-         * Widget Content
-         */
+       
         ?>
 
         <!-- popular posts -->
         <div class="popular-posts-wrapper">
 
             <?php
-            $featured_args = array(
-                'posts_per_page' => $limit,
-            );
-            $featured_query = new WP_Query(array(
+             $featured_query = new WP_Query(array(
                 'post_type' => 'blogpost',
+                 'post_type' => 'blogpost',
+                'meta_key' => 'post_views_count',
+                'posts_per_page' => $limit,
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
             ));
-            // This code for main post
-            // $featured_query = new WP_Query($featured_args);
-
-            /**
-             * Check if zilla likes plugin exists
-             */
+           
+            
             if ($featured_query->have_posts()) : while ($featured_query->have_posts()) : $featured_query->the_post();
                     ?>
+
 
                     <?php if (get_the_content() != '') : ?>
 
                         <!-- post -->
-                        <div class="post">
+                         <div class="post">
                             <!-- content -->
                                 <div class="posts_style">
                                     <?php echo get_the_post_thumbnail(get_the_ID(), '  post_thumbnail_img'); ?>
@@ -58,7 +52,10 @@ class custom_recent_posts extends WP_Widget {
                                             $blog_catagory = $bp_catagorys->name;
                                             $link = get_term_link($bp_catagorys, 'catagory');
                                             echo '<a href="' . $link . '">' . $blog_catagory . '</a> ';
-                                        }
+                                        }     
+                                    }
+                                    else{
+                                        echo 'Uncatagory';
                                     }
                                     ?>
                                     </span></p>
@@ -74,20 +71,22 @@ class custom_recent_posts extends WP_Widget {
             wp_reset_query();
             ?>
 
+
+
+
         </div> <!-- end posts wrapper -->
 
         <?php
         echo $after_widget;
     }
-
     function form($instance) {
         if (!isset($instance['title']))
-            $instance['title'] = esc_html('Recent Posts');
+            $instance['title'] = esc_html__('Popular Posts', 'diwe');
         if (!isset($instance['limit']))
             $instance['limit'] = 5;
         ?>
 
-        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Title') ?></label>
+        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Title', 'diwe') ?></label>
 
             <input  type="text" value="<?php echo esc_attr($instance['title']); ?>"
                     name="<?php echo $this->get_field_name('title'); ?>"
@@ -95,7 +94,7 @@ class custom_recent_posts extends WP_Widget {
                     class="widefat" />
         </p>
 
-        <p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php esc_html_e('Limit Posts Number') ?></label>
+        <p><label for="<?php echo $this->get_field_id('limit'); ?>"><?php esc_html_e('Limit Posts Number', 'diwe') ?></label>
 
             <input  type="text" value="<?php echo esc_attr($instance['limit']); ?>"
                     name="<?php echo $this->get_field_name('limit'); ?>"
@@ -105,6 +104,4 @@ class custom_recent_posts extends WP_Widget {
 
             <?php
         }
-
     }
-    ?>

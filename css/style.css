@@ -384,7 +384,7 @@ box-shadow: 1px 2px 2px 4px rgba(204,204,204,1);
 ============================ */
 .blog {
 	padding-top:30px;
-	padding-bottom:50px;
+	//padding-bottom:50px;
 	background-color:#f9f9f9;
 }
 .page-header h5 {
