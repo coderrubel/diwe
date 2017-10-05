@@ -203,7 +203,7 @@ add_shortcode('team', 'member');
 //Blog Post
 function blog_post($atts) {
     extract(shortcode_atts(array(
-        'count' => '2',), $atts));
+        'count' => '3',), $atts));
 
     $q = new WP_Query(
             array('posts_per_page' => $count, 'post_type' => 'blogpost', 'orderby' => 'menu_order', 'order' => 'ASC')
@@ -217,19 +217,32 @@ function blog_post($atts) {
         $post_content = get_the_content();
         $list .= '<div class="page-header">
                 <a href="'. get_the_permalink().'"><h3>' . get_the_title() . '</h3></a>
-                <h5>' . get_the_time('y M Y') .' '."View:".getPostViews(get_the_ID()).'</h5>		
+                <h5>' . get_the_time('y M Y') .' '."View:".getPostViews(get_the_ID()).' '. get_simple_likes_button( get_the_ID() ).'</h5>		
                 <p>' . trim(substr(get_the_content(), '0', '250')) . '</p> 
                 <a href="' . get_the_permalink() . '" class="btn btn-primary" role="button">Read More</a>
                 </div>';
 
     endwhile;
+   
+                        the_posts_pagination(array(
+                            //'show_all' => true,
+                           // 'prev_text' => 'Prev',
+                            //'next_text' => 'Next',
+                            'post_type' => 'blogpost',
+                            'screen_reader_text' => ' ',
+                            'before_page_number' => '<b>',
+                            'after_page_number' => '</b>'
+                            ));
+                   
      wp_reset_postdata(); 
-     the_posts_pagination( );
+    
     $list.= '   </div>';
    
-    wp_reset_query();
+
+    
     return $list;
-  
+
+
     
 }
 

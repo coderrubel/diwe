@@ -94,11 +94,23 @@ function customize_services($headingsection) {
         'setting' => 'google',
         'type' => 'url',
     ));
+    //contact from maps
+     $headingsection->add_setting('maps', array(
+        'default' => '#',
+        'transport' => 'refresh',
+    ));
+    $headingsection->add_control('maps', array(
+        'label' => 'Contact From Maps URL without Width Height',
+        'section' => 'heading',
+        'setting' => 'maps',
+        'type' => 'url',
+    ));
+    
     $headingsection->add_setting('colora', array(
         'default'=>'#E9E9E9',
         'transport' => 'refresh',
     ));
-    $headingsection->add_control(new WP_Customize_Color_Control($headingsection,'text_color',array( 
+    $headingsection->add_control(new  WP_Customize_Color_Control($headingsection,'colora',array( 
         'label' => 'Font Color',
         'section' => 'heading',
         'setting' => 'colora',  
@@ -309,6 +321,7 @@ function setPostViews($postID) {
 remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
 
 function add_css_and_js() {
+    wp_register_style('likes', get_template_directory_uri() . '/css/simple-likes-public.css');
     wp_register_style('style', get_template_directory_uri() . '/css/style.css');
     wp_register_style('animate', get_template_directory_uri() . '/css/animate.css');
     wp_register_style('fancybox', get_template_directory_uri() . '/js/fancybox/jquery.fancybox.css');
@@ -333,8 +346,11 @@ function add_css_and_js() {
     wp_register_script('functions', get_template_directory_uri() . '/js/functions.js');
 
 */
-    wp_enqueue_style(array('bootstrap', 'font-awesome', 'bxslider', 'isotope', 'fancybox', 'animate', 'style', 'mystyle'));
+    wp_enqueue_style(array('likes','bootstrap', 'font-awesome', 'bxslider', 'isotope', 'fancybox', 'animate', 'style', 'mystyle'));
    // wp_enqueue_script(array('jquery', 'bootstrap', 'wow', 'fancybox','isotope', 'easing', 'bxslider', 'functions'));
 }
 
 add_action('wp_enqueue_scripts', 'add_css_and_js');
+
+
+require_once '/inc/post-like.php';

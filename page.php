@@ -28,19 +28,21 @@
 
     </div>
 <?php endwhile; ?>
-      
+      <?php  the_posts_pagination(); ?>
  <?php }
  else { ?>
     
 <?php while (have_posts()): the_post(); ?>
  
-    <div class="contact-area  ">
+    <div class="contact-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 ">
-                    <?php the_content(); ?>
+                <div class="col-md-offset-4 col-md-8">
+                        <?php the_content(); ?>
                 </div>
-                
+             
+                    <iframe src="<?php echo get_theme_mod('maps'); ?>" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+               
             </div>
         </div>
 
