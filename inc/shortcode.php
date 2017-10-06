@@ -143,7 +143,7 @@ function service($atts) {
 						<div class="icon">
 							<i class="' . $icon . '"></i>
 						</div>
-						<p>' . get_the_content() . '						</p>
+						<p>' . get_the_content() . '</p>
 						<div class="ficon">
 							<a href="' . get_the_permalink() . '" class="btn btn-default" role="button">Read more</a>
 						</div>
@@ -202,15 +202,13 @@ add_shortcode('team', 'member');
 
 //Blog Post
 function blog_post($atts) {
-    extract(shortcode_atts(array(
-        'count' => '3',), $atts));
+   
 
     $q = new WP_Query(
             array('posts_per_page' => $count, 'post_type' => 'blogpost', 'orderby' => 'menu_order', 'order' => 'ASC')
     );
 
-    $list = '
-				<div class="col-xs-12 col-sm-6 col-md-12">';
+    $list = '<div class="col-xs-12 col-sm-6 col-md-12">';
     while ($q->have_posts()) : $q->the_post();
         $idd = get_the_ID();
         $custom_field = get_post_meta($idd, 'custom_field', true);
@@ -223,8 +221,15 @@ function blog_post($atts) {
                 </div>';
 
     endwhile;
+                       
+     wp_reset_postdata(); 
+
+    $list.= '   </div>';
    
-                        the_posts_pagination(array(
+  
+    
+    return $list;
+                    the_posts_pagination(array(
                             //'show_all' => true,
                            // 'prev_text' => 'Prev',
                             //'next_text' => 'Next',
@@ -233,15 +238,7 @@ function blog_post($atts) {
                             'before_page_number' => '<b>',
                             'after_page_number' => '</b>'
                             ));
-                   
-     wp_reset_postdata(); 
-    
-    $list.= '   </div>';
-   
-
-    
-    return $list;
-
+                           
 
     
 }
@@ -251,7 +248,7 @@ add_shortcode('blog', 'blog_post');
 //Protfolio
 function custom_protfolio($atts) {
     extract(shortcode_atts(array(
-        'count' => '',
+        'count' => '8',
                     ), $atts));
 
     $q = new WP_Query(

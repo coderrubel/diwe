@@ -21,6 +21,9 @@
                     <ul class="info">
                         <li><p><i class="fa fa-phone"></i><?php echo get_theme_mod('phone'); ?></p></li>
                         <li><a href="mailto:<?php echo get_theme_mod('mail'); ?>"><i class="fa fa-envelope"></i><?php echo get_theme_mod('mail'); ?></a></li>
+                        
+                    </ul>
+                    <ul class="info pull-right">
                         <li class="pull-right"><?php get_search_form(); ?></li>
                     </ul>
                 </div>

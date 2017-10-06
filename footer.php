@@ -61,6 +61,7 @@
 <script src="<?php echo get_template_directory_uri() ?>/js/jquery.easing.1.3.js"></script>
 <script src="<?php echo get_template_directory_uri() ?>/js/jquery.bxslider.min.js"></script>
 <script src="<?php echo get_template_directory_uri() ?>/js/functions.js"></script>
+<script src="<?php echo get_template_directory_uri() ?>/js/animate.js"></script>
 <script>wow = new WOW({}).init();</script>
 <?php wp_footer(); ?>
 </body>
